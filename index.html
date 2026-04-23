@@ -10,8 +10,10 @@
     <div class="card">
         <form onsubmit="event.preventDefault(); searchWeather();" class="search">
             <input type="text" id="cityInput" placeholder="Enter city name" spellcheck="false">
-            <button type="submit">Search</button>
+            <button type="button">Search</button>
         </form>
+
+        <div class="loader" style="display: none;"></div>
 
         <div class="weather" style="display: none;">
             <img src="" class="weather-icon" alt="Weather Icon">
