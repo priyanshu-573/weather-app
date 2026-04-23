@@ -4,8 +4,13 @@ const forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?units=metr
 
 const cityInput = document.getElementById("cityInput");
 const weatherIcon = document.querySelector(".weather-icon");
+const loader = document.querySelector(".loader");
+const weather = document.querySelector(".weather");
+
 
 async function fetchWeather(city) {
+
+    
     const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
     const forecastResponse = await fetch(forecastUrl + city + `&appid=${apiKey}`);
 
@@ -21,15 +26,27 @@ async function fetchWeather(city) {
 }
 
     async function checkWeather(city) {
+
+        loader.style.display = "block";
+        weather.style.display = "none";
+
+
     const result = await fetchWeather(city);
 
-    if (!result) return;
+    if (!result) {
+    loader.style.display = "none";
+    return;
+}
 
     const { data, forecastData } = result;
 
     updateUI(data);
     displayHourlyForecast(forecastData);
+
+    loader.style.display = "none";
+    weather.style.display = "block";
 }
+    
 
         function updateUI(data) {
     document.querySelector(".city").innerHTML = data.name;
@@ -55,10 +72,9 @@ async function fetchWeather(city) {
     } else {
         weatherIcon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     }
+        }
 
-    document.querySelector(".weather").style.display = "block";
-}
-
+        
 function displayHourlyForecast(data) {
     const hourlyContainer = document.querySelector(".hourly-forecast");
     hourlyContainer.innerHTML = ""; 
@@ -78,6 +94,7 @@ function displayHourlyForecast(data) {
         `;
     }
 }
+
 
 function searchWeather() {
     checkWeather(cityInput.value);
