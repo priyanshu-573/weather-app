@@ -5,42 +5,58 @@ const forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?units=metr
 const cityInput = document.getElementById("cityInput");
 const weatherIcon = document.querySelector(".weather-icon");
 
-async function checkWeather(city) {
+async function fetchWeather(city) {
     const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
     const forecastResponse = await fetch(forecastUrl + city + `&appid=${apiKey}`);
 
-    if (response.status == 404) {
-        alert("City not found. Please try again.");
-    } else {
-        const data = await response.json();
-        const forecastData = await forecastResponse.json();
-
-        document.querySelector(".city").innerHTML = data.name;
-        document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
-        document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
-        document.querySelector(".wind").innerHTML = data.wind.speed + " m/s";
-
-        document.getElementById("mapFrame").src = `https://www.google.com/maps?q=${data.name}&output=embed`;
-
-        const condition = data.weather[0].main;
-        if (condition == "Clouds") {
-            weatherIcon.src = "images/clouds.png";
-        } else if (condition == "Clear") {
-            weatherIcon.src = "images/clear.png";
-        } else if (condition == "Rain") {
-            weatherIcon.src = "images/rain.png";
-        } else if (condition == "Drizzle") {
-            weatherIcon.src = "images/drizzle.png";
-        } else if (condition == "Mist" || condition == "Haze") {
-            weatherIcon.src = "images/mist.png";
-        } else {
-            weatherIcon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-        }
-
-        displayHourlyForecast(forecastData);
-
-        document.querySelector(".weather").style.display = "block";
+    if (response.status === 404) {
+        alert("City not found");
+        return;
     }
+
+    const data = await response.json();
+    const forecastData = await forecastResponse.json();
+
+    return { data, forecastData };
+}
+
+    async function checkWeather(city) {
+    const result = await fetchWeather(city);
+
+    if (!result) return;
+
+    const { data, forecastData } = result;
+
+    updateUI(data);
+    displayHourlyForecast(forecastData);
+}
+
+        function updateUI(data) {
+    document.querySelector(".city").innerHTML = data.name;
+    document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+    document.querySelector(".wind").innerHTML = data.wind.speed + " m/s";
+
+    document.getElementById("mapFrame").src =
+        `https://www.google.com/maps?q=${data.name}&output=embed`;
+
+    const condition = data.weather[0].main;
+
+    if (condition == "Clouds") {
+        weatherIcon.src = "images/clouds.png";
+    } else if (condition == "Clear") {
+        weatherIcon.src = "images/clear.png";
+    } else if (condition == "Rain") {
+        weatherIcon.src = "images/rain.png";
+    } else if (condition == "Drizzle") {
+        weatherIcon.src = "images/drizzle.png";
+    } else if (condition == "Mist" || condition == "Haze") {
+        weatherIcon.src = "images/mist.png";
+    } else {
+        weatherIcon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    }
+
+    document.querySelector(".weather").style.display = "block";
 }
 
 function displayHourlyForecast(data) {
