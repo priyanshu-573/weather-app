@@ -8,11 +8,12 @@
 </head>
 <body>
     <div class="card">
-        <form onsubmit="event.preventDefault(); searchWeather();" class="search">
+            <form id="searchForm" class="search">
             <input type="text" id="cityInput" placeholder="Enter city name" spellcheck="false">
-            <button type="button">Search</button>
+            <button type="submit">Search</button>
+            <button type="button" id="location">Use my location</button>
         </form>
-
+        
         <div class="loader" style="display: none;"></div>
 
         <div class="weather" style="display: none;">
@@ -45,5 +46,6 @@
     </div>
     <script src="js/config.js"></script>
     <script src="js/script.js"></script>
+    <!-- <script src="js/test.js"></script> -->
 </body>
 </html>
