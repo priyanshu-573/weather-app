@@ -8,11 +8,7 @@ const loader = document.querySelector(".loader");
 const weather = document.querySelector(".weather");
 const locationBtn = document.getElementById('location')
 
-// cityInput.addEventListener("keypress",(e)=>{
-//     if(e.key==="Enter"){
-//         searchWeather();
-//     }
-// });
+
 const form = document.getElementById("searchForm");
 
 form.addEventListener("submit", (e) => {
@@ -36,6 +32,9 @@ locationBtn.addEventListener('click', (e) => {
 async function showPosition(position){
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
+
+    document.getElementById("mapFrame").src =
+    `https://www.google.com/maps?q=${lat},${lon}&z=14&output=embed`;
 
     loader.style.display = "block";
     weather.style.display = "none";
@@ -113,7 +112,10 @@ async function checkWeather(city) {
     loader.style.display = "none";
     return;
 }
-    const { data, forecastData } = result;
+const { data, forecastData } = result; 
+
+    document.getElementById("mapFrame").src =
+`https://maps.google.com/maps?q=${lat},${lon}&z=17&output=embed`;
 
     updateUI(data);
     displayHourlyForecast(forecastData);
@@ -129,9 +131,6 @@ async function checkWeather(city) {
     document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
     document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
     document.querySelector(".wind").innerHTML = data.wind.speed + " m/s";
-
-    document.getElementById("mapFrame").src =
-        `https://www.google.com/maps?q=${data.name}&output=embed`;
 
     const condition = data.weather[0].main;
 
