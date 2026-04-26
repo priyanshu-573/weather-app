@@ -26,7 +26,7 @@ A simple weather application that allows users to check real-time weather data u
 
 ## 📸 Screenshots
 
-<img src="images/screenshot.png">
+<img src="images/screenshot.png" width="100%">
 
 ---
 
