@@ -26,7 +26,7 @@ A simple weather application that allows users to check real-time weather data u
 
 ## 📸 Screenshots
 
-images/screenshot.png
+<img src="images/screenshot.png">
 
 ---
 
@@ -50,13 +50,13 @@ images/screenshot.png
 
 ## 🔗 Live Demo
 
-(Add your Netlify link here after deployment)
+https://priyanshu-weather-dashboard-55571w.netlify.app
 
 ---
 
 ## 📁 GitHub Repository
 
-(Add your repo link here)
+https://github.com/priyanshu-573/weather-app
 
 ---
 
