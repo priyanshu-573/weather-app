@@ -115,7 +115,7 @@ async function checkWeather(city) {
 const { data, forecastData } = result; 
 
     document.getElementById("mapFrame").src =
-`https://maps.google.com/maps?q=${lat},${lon}&z=17&output=embed`;
+`https://maps.google.com/maps?q=${data.coord.lat},${data.coord.lon}&z=10&output=embed`;
 
     updateUI(data);
     displayHourlyForecast(forecastData);
